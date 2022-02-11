@@ -4,6 +4,8 @@ type MainScreenProps = {
   placesCount: number;
 }
 
+const cards = Array.from({length: 5}, PlaceCard);
+
 function MainScreen({placesCount}: MainScreenProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
@@ -65,11 +67,11 @@ function MainScreen({placesCount}: MainScreenProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
+              {
+                [
+                  cards,
+                ].map((item) => item)
+              }
             </div>
           </section>
           <div className="cities__right-section">
