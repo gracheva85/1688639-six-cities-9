@@ -19,7 +19,6 @@ function Header({navigation}: HeaderProps): JSX.Element {
         </div>
       </div>
     </header>
-
   );
 }
 

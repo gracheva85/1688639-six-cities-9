@@ -4,28 +4,33 @@ import Main from '../pages/main/main';
 import Favorites from '../pages/favorites/favorites';
 import SignIn from '../pages/sign-in/sign-in';
 import Room from '../pages/room/room';
-import Error from '../components/error';
+import Error from '../pages/error/error';
 import PrivateRoute from '../components/private-route';
+
 import {AppRoute, AuthorizationStatus} from '../consts';
+import {Reviews} from '../types/review';
+import {Offers} from '../types/offer';
 
 type AppScreenProps = {
   placesCount: number;
+  offers: Offers;
+  reviews: Reviews;
 }
 
-function App({placesCount}: AppScreenProps): JSX.Element {
+function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Main placesCount={placesCount} />} />
+        <Route index element={<Main offers={offers} placesCount={placesCount} />} />
         <Route path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <Favorites />
+              <Favorites offers={offers}/>
             </PrivateRoute>
           }
         />
         <Route path={AppRoute.Login} element={<SignIn />} />
-        <Route path={AppRoute.Offer} element={<Room />} />
+        <Route path={AppRoute.Offer} element={<Room reviews={reviews} offers={offers} />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

@@ -1,14 +1,15 @@
-import PlaceCard from '../../components/place-card';
+import CardsList from '../../components/cards-list';
 import Header from '../../components/header';
 import Navigation from '../../components/navigation';
+import {Offers} from '../../types/offer';
 
 type MainProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-const cards = Array.from({length: 5}, PlaceCard);
-
-function Main({placesCount}: MainProps): JSX.Element {
+function Main({placesCount, offers}: MainProps): JSX.Element {
+  //пернести блоки с городами в отдельный компонент
   return (
     <div className="page page--gray page--main">
       {<Header navigation={<Navigation />} />}
@@ -70,13 +71,7 @@ function Main({placesCount}: MainProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  [
-                    cards,
-                  ].map((item) => item)
-                }
-              </div>
+              {<CardsList offers={offers} />}
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
