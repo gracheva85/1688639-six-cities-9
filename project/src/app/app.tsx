@@ -5,16 +5,16 @@ import Favorites from '../pages/favorites/favorites';
 import SignIn from '../pages/sign-in/sign-in';
 import Room from '../pages/room/room';
 import Error from '../pages/error/error';
-import PrivateRoute from '../components/private-route';
+import PrivateRoute from '../components/private-route/private-route';
 
 import {AppRoute, AuthorizationStatus} from '../consts';
-import {Reviews} from '../types/review';
-import {Offers} from '../types/offer';
+import {Review} from '../types/review';
+import {Offer} from '../types/offer';
 
 type AppScreenProps = {
   placesCount: number;
-  offers: Offers;
-  reviews: Reviews;
+  offers: Offer[];
+  reviews: Review[];
 }
 
 function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {

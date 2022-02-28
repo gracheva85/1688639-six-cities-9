@@ -1,18 +1,18 @@
-import { generateId } from '../mocks/util';
-import {Offer} from '../types/offer';
-import {Reviews} from '../types/review';
-import CommentForm from './form';
-import PlaceReview from './place-review';
+import CommentForm from '../form/form';
+import { v4 as uuidv4 } from 'uuid';
+import PlaceReviewList from '../place-review-list/place-review-list';
+import { Offer } from '../../types/offer';
+import { Review } from '../../types/review';
+
 
 type RoomCardProps = {
   offer: Offer;
-  reviews: Reviews;
+  reviews: Review[];
 };
 
 function RoomCard(props: RoomCardProps): JSX.Element {
   const {offer, reviews} = props;
   const {images, price, rating, title, type, description, bedrooms, maxAdults, host, isPremium, goods} = offer;
-  const getUserStatus = () => host.isPro? 'Pro' : '';
   const getPropertyMark = () => isPremium? <div className="property__mark"><span>Premium</span></div> : '';
 
   return (
@@ -21,7 +21,7 @@ function RoomCard(props: RoomCardProps): JSX.Element {
         <div className="property__gallery">
           {
             images.map((image) => (
-              <div key={generateId()} className="property__image-wrapper">
+              <div key={uuidv4()} className="property__image-wrapper">
                 <img className="property__image" src={image} alt="Studio" />
               </div>
             ))
@@ -69,7 +69,7 @@ function RoomCard(props: RoomCardProps): JSX.Element {
             <ul className="property__inside-list">
               {
                 goods.map((good) => (
-                  <li key={good} className="property__inside-item">
+                  <li key={uuidv4()} className="property__inside-item">
                     {good}
                   </li>
                 ))
@@ -86,7 +86,7 @@ function RoomCard(props: RoomCardProps): JSX.Element {
                 {host.name}
               </span>
               <span className="property__user-status">
-                {getUserStatus()}
+                {host.isPro? 'Pro' : ''}
               </span>
             </div>
             <div className="property__description">
@@ -96,14 +96,8 @@ function RoomCard(props: RoomCardProps): JSX.Element {
             </div>
           </div>
           <section className="property__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-            <ul className="reviews__list">
-              {
-                reviews.map((review) => (
-                  <PlaceReview key={review.id} review={review} />
-                ))
-              }
-            </ul>
+            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+            <PlaceReviewList reviews={reviews} />
             <CommentForm />
           </section>
         </div>

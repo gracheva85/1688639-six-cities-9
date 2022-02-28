@@ -1,22 +1,29 @@
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Offer} from '../types/offer';
+import {Offer} from '../../types/offer';
 
 type PlaceCardProps = {
   offer: Offer;
+  articleClassChange: string;
+  imgClassChange: string;
+  onListItemHover: (listItemName: number) => void;
 };
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {offer} = props;
-  const {images, price, title, type, id, isPremium} = offer;
-  const [activCardId, setActivCardId] = useState(0);
+  const {offer, articleClassChange,  imgClassChange, onListItemHover} = props;
+  const {images, price, title, type, isPremium, id} = offer;
   const getCardMark = () => isPremium? <div className="place-card__mark"><span>Premium</span></div> : '';
 
+  const listItemHoverHandler = () => {
+    onListItemHover(id);
+  };
+
   return (
-    <article onMouseOver={() => {setActivCardId(id);}} className="cities__place-card place-card">
+    <article className={`${articleClassChange} place-card`}
+      onMouseOver={listItemHoverHandler}
+    >
       {getCardMark()}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${activCardId}`} title='/offer'>
+      <div className={`${imgClassChange} place-card__image-wrapper`}>
+        <Link to={`/offer/${id}`} title='/offer'>
           <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -40,7 +47,7 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${activCardId}`} title='/offer'>{title}</Link>
+          <Link to={`/offer/${id}`} title='/offer'>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

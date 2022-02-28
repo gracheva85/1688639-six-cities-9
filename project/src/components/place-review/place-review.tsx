@@ -1,4 +1,4 @@
-import {Review} from '../types/review';
+import {Review} from '../../types/review';
 
 
 type ReviewProps = {
@@ -6,14 +6,14 @@ type ReviewProps = {
 }
 
 function PlaceReview ({review}: ReviewProps): JSX.Element {
-  const {id, user, comment, rating, date} = review;
+  const {user, comment, rating, date} = review;
 
   const month = new Date(date).toLocaleString('en-us', { month: 'short' });
   const year = new Date(date).getFullYear();
   const argumentDate = `${year}-${new Date(date).getMonth()}-${new Date(date).getDate()}`;
 
   return (
-    <li key={id} className="reviews__item">
+    <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
