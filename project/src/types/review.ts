@@ -10,5 +10,4 @@ type Review = {
   name: string
   }};
 
-type Reviews = Review[];
-export type {Review, Reviews};
+export type {Review};

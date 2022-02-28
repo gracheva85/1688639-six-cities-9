@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
-import Header from '../../components/header';
-import Navigation from '../../components/navigation';
+import Header from '../../components/header/header';
+import Navigation from '../../components/navigation/navigation';
 
 function Error(): JSX.Element {
   return (

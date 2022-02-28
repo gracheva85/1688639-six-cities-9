@@ -33,6 +33,4 @@ type Offer = {
   type: string
   };
 
-type Offers = Offer[];
-
-export type {Offer, Offers};
+export type {Offer};

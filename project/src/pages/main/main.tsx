@@ -1,14 +1,25 @@
-import CardsList from '../../components/cards-list';
-import Header from '../../components/header';
-import Navigation from '../../components/navigation';
-import {Offers} from '../../types/offer';
+import CardsList from '../../components/cards-list/cards-list';
+import Header from '../../components/header/header';
+import Navigation from '../../components/navigation/navigation';
+import Map from '../../components/map/map';
+import { CITY } from '../../consts';
+import {Offer} from '../../types/offer';
+import { useState } from 'react';
 
 type MainProps = {
   placesCount: number;
-  offers: Offers;
+  offers: Offer[];
 }
 
 function Main({placesCount, offers}: MainProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState(0);
+
+  const onListItemHover = (listItemName: number) => {
+    const currentPoint = offers.find((offer) =>
+      offer.id === listItemName,
+    );
+    currentPoint&&setSelectedPoint(currentPoint.id);
+  };
   //пернести блоки с городами в отдельный компонент
   return (
     <div className="page page--gray page--main">
@@ -71,10 +82,12 @@ function Main({placesCount, offers}: MainProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              {<CardsList offers={offers} />}
+              {<CardsList offers={offers} onListItemHover={onListItemHover} />}
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={CITY} offers={offers} selectedPoint={selectedPoint} />
+              </section>
             </div>
           </div>
         </div>
