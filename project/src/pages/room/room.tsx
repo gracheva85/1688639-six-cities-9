@@ -6,26 +6,23 @@ import RoomCard from '../../components/room-card/room-card';
 import {Offer} from '../../types/offer';
 import { Review } from '../../types/review';
 import Map from '../../components/map/map';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { sortOffers } from '../../common';
+import { useAppDispatch } from '../../hooks';
 import { getOfferId } from '../../store/action';
 
 type RoomProps = {
   offers: Offer[];
   reviews: Review[];
+  selectedPoint: number;
 };
 
-function Room(props: RoomProps): JSX.Element {
-  const {offers, reviews} = props;
-  const currentCity = useAppSelector((state) => state.city);
-  const currentType = useAppSelector((state) => state.sortingType);
-  const dispatch = useAppDispatch();
-  const nextOffers = sortOffers(offers, currentCity, currentType).slice(0, 3);
+function Room({offers, reviews, selectedPoint}: RoomProps): JSX.Element {
+  const nextOffers = offers.slice(0, 3);
 
   const params = useParams();
   const current = params.id;
+
+  const dispatch = useAppDispatch();
   dispatch(getOfferId(Number(current)));
-  const newSelectedPoint = useAppSelector((state) => state.offerId);
 
   const currentOffer = offers.find((item)=>String(item.id)===current);
   const roomCard = currentOffer && <RoomCard reviews={reviews} offer={currentOffer} />;
@@ -37,7 +34,7 @@ function Room(props: RoomProps): JSX.Element {
         <section className="property">
           {roomCard}
           <section className="property__map map">
-            <Map offers={nextOffers} selectedPoint={newSelectedPoint}/>
+            <Map offers={nextOffers} selectedPoint={selectedPoint}/>
           </section>
         </section>
         <div className="container">

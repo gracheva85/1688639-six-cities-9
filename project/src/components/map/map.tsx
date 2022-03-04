@@ -7,7 +7,7 @@ import { Offer } from '../../types/offer';
 
 type MapProps = {
   offers: Offer[];
-  selectedPoint?: number;
+  selectedPoint: number;
 };
 
 function Map({offers, selectedPoint}: MapProps) {

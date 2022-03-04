@@ -2,22 +2,19 @@ import Header from '../../components/header/header';
 import Navigation from '../../components/navigation/navigation';
 import {Offer} from '../../types/offer';
 import CitiesList from '../../components/cities-list/cities-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { changeСity, getOfferId, resetOfferId } from '../../store/action';
-import { sortOffers } from '../../common';
 import EmptyContainer from '../../components/empty-container/empty-container';
 import FullContainer from '../../components/full-container/full-container';
 
 type MainProps = {
   offers: Offer[];
+  currentCity: string;
+  selectedPoint: number;
 }
 
-function Main({offers}: MainProps): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
-  const currentType = useAppSelector((state) => state.sortingType);
+function Main({offers, currentCity, selectedPoint}: MainProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const sortedOffers = sortOffers(offers, currentCity, currentType);
-
   const onListItemHover = (listItemName: number) => {
     const currentPoint = offers.find((offer) =>
       offer.id === listItemName,
@@ -40,7 +37,7 @@ function Main({offers}: MainProps): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          {sortedOffers.length>0? <FullContainer offers={sortedOffers} onListItemHover={onListItemHover} /> : <EmptyContainer city={currentCity} />}
+          {offers.length>0? <FullContainer offers={offers} onListItemHover={onListItemHover} currentCity={currentCity} selectedPoint={selectedPoint}/> : <EmptyContainer city={currentCity} />}
         </div>
       </main>
     </div>
