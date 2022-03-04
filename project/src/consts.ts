@@ -11,15 +11,24 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const CITY = {
-  title: 'Амстердам',
-  lat: 52.370216,
-  lng: 4.895168,
-  zoom: 12,
-};
-
 const PIN = '/img/pin.svg';
 
 const PIN_ACTIVE = '/img/pin-active.svg';
 
-export {AppRoute, AuthorizationStatus, CITY, PIN, PIN_ACTIVE};
+const Cities = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
+
+const SortingType = {
+  POPULAR: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  TOP: 'Top rated first',
+};
+
+export {AppRoute, AuthorizationStatus, PIN, PIN_ACTIVE, Cities, SortingType};

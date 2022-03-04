@@ -12,16 +12,15 @@ import {Review} from '../types/review';
 import {Offer} from '../types/offer';
 
 type AppScreenProps = {
-  placesCount: number;
   offers: Offer[];
   reviews: Review[];
 }
 
-function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
+function App({offers, reviews}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Main offers={offers} placesCount={placesCount} />} />
+        <Route index element={<Main offers={offers} />} />
         <Route path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>

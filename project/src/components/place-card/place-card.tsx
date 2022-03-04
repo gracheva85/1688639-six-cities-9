@@ -5,7 +5,7 @@ type PlaceCardProps = {
   offer: Offer;
   articleClassChange: string;
   imgClassChange: string;
-  onListItemHover: (listItemName: number) => void;
+  onListItemHover?: (listItemName: number) => void;
 };
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
@@ -13,13 +13,10 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   const {images, price, title, type, isPremium, id} = offer;
   const getCardMark = () => isPremium? <div className="place-card__mark"><span>Premium</span></div> : '';
 
-  const listItemHoverHandler = () => {
-    onListItemHover(id);
-  };
-
   return (
     <article className={`${articleClassChange} place-card`}
-      onMouseOver={listItemHoverHandler}
+      onMouseEnter={()=>{onListItemHover&&onListItemHover(id);}}
+      onMouseLeave={()=>{onListItemHover&&onListItemHover(0);}}
     >
       {getCardMark()}
       <div className={`${imgClassChange} place-card__image-wrapper`}>
