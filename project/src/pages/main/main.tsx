@@ -1,26 +1,31 @@
-import CardsList from '../../components/cards-list/cards-list';
 import Header from '../../components/header/header';
 import Navigation from '../../components/navigation/navigation';
-import Map from '../../components/map/map';
-import { CITY } from '../../consts';
 import {Offer} from '../../types/offer';
-import { useState } from 'react';
+import CitiesList from '../../components/cities-list/cities-list';
+import { useAppDispatch } from '../../hooks';
+import { changeСity, getOfferId, resetOfferId } from '../../store/action';
+import EmptyContainer from '../../components/empty-container/empty-container';
+import FullContainer from '../../components/full-container/full-container';
 
 type MainProps = {
-  placesCount: number;
   offers: Offer[];
+  currentCity: string;
+  selectedPoint: number;
 }
 
-function Main({placesCount, offers}: MainProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState(0);
-
+function Main({offers, currentCity, selectedPoint}: MainProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const onListItemHover = (listItemName: number) => {
     const currentPoint = offers.find((offer) =>
       offer.id === listItemName,
     );
-    currentPoint&&setSelectedPoint(currentPoint.id);
+    currentPoint ? dispatch(getOfferId(listItemName)) : dispatch(resetOfferId());
   };
-  //пернести блоки с городами в отдельный компонент
+
+  const onCityItemHover = (cityName: string) => {
+    dispatch(changeСity(cityName));
+  };
+
   return (
     <div className="page page--gray page--main">
       {<Header navigation={<Navigation />} />}
@@ -28,68 +33,11 @@ function Main({placesCount, offers}: MainProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a title='offer' className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CitiesList onCityItemHover={onCityItemHover}/>
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              {<CardsList offers={offers} onListItemHover={onListItemHover} />}
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map city={CITY} offers={offers} selectedPoint={selectedPoint} />
-              </section>
-            </div>
-          </div>
+          {offers.length>0? <FullContainer offers={offers} onListItemHover={onListItemHover} currentCity={currentCity} selectedPoint={selectedPoint}/> : <EmptyContainer city={currentCity} />}
         </div>
       </main>
     </div>

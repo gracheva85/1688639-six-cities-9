@@ -1,20 +1,20 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
-import { PIN, PIN_ACTIVE } from '../../consts';
+import {PIN, PIN_ACTIVE } from '../../consts';
 import useMap from '../../hooks/useMap';
-import { City } from '../../types/city';
 import { Offer } from '../../types/offer';
 
 type MapProps = {
-  city: City;
   offers: Offer[];
   selectedPoint: number;
 };
 
-function Map({city, offers, selectedPoint}: MapProps) {
+function Map({offers, selectedPoint}: MapProps) {
+  const currentCity = offers[0].city;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, currentCity);
+  const {location: {latitude: lat, longitude: lng, zoom}} = currentCity;
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: PIN,
@@ -30,20 +30,22 @@ function Map({city, offers, selectedPoint}: MapProps) {
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
+
+      offers.forEach(({id, location: {latitude, longitude}}) => {
         leaflet
           .marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
+            lat: latitude,
+            lng: longitude,
           }, {
-            icon: (offer.id === selectedPoint)
+            icon: (id === selectedPoint)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
           .addTo(map);
       });
+      map.flyTo([lat, lng], zoom);
     }
-  }, [currentCustomIcon, defaultCustomIcon, map, offers, selectedPoint]);
+  }, [currentCustomIcon, defaultCustomIcon, lat, lng, map, offers, selectedPoint, zoom]);
 
   return (
     <div
