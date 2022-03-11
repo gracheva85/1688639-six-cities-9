@@ -9,13 +9,13 @@ import FullContainer from '../../components/full-container/full-container';
 
 type MainProps = {
   offers: Offer[];
-  currentCity: string;
-  selectedPoint: number;
 }
 
-function Main({offers, currentCity, selectedPoint}: MainProps): JSX.Element {
+function Main({offers}: MainProps): JSX.Element {
   const dispatch = useAppDispatch();
+
   const onListItemHover = (listItemName: number) => {
+    dispatch(getOfferId(listItemName));
     const currentPoint = offers.find((offer) =>
       offer.id === listItemName,
     );
@@ -37,7 +37,7 @@ function Main({offers, currentCity, selectedPoint}: MainProps): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          {offers.length>0? <FullContainer offers={offers} onListItemHover={onListItemHover} currentCity={currentCity} selectedPoint={selectedPoint}/> : <EmptyContainer city={currentCity} />}
+          {offers.length>0? <FullContainer offers={offers} onListItemHover={onListItemHover} /> : <EmptyContainer />}
         </div>
       </main>
     </div>
