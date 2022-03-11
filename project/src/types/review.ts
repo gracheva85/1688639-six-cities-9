@@ -8,6 +8,12 @@ type Review = {
   id: number
   isPro: boolean
   name: string
-  }};
+  }
+};
 
-export type {Review};
+type NewReview = {
+  comment: string
+  rating: number
+};
+
+export type {Review, NewReview};

@@ -3,24 +3,34 @@ import { v4 as uuidv4 } from 'uuid';
 import PlaceReviewList from '../place-review-list/place-review-list';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
-
+import { correctType, paintRating } from '../../common';
+import { AuthorizationStatus } from '../../consts';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchCommentAction } from '../../store/api-actions';
 
 type RoomCardProps = {
   offer: Offer;
-  reviews: Review[];
 };
 
 function RoomCard(props: RoomCardProps): JSX.Element {
-  const {offer, reviews} = props;
+  const {offer} = props;
   const {images, price, rating, title, type, description, bedrooms, maxAdults, host, isPremium, goods} = offer;
+  const imagesForRender = images.slice(0, 6);
+
   const getPropertyMark = () => isPremium? <div className="property__mark"><span>Premium</span></div> : '';
+
+  const currentAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  store.dispatch(fetchCommentAction());
+  const reviews: Review[] = useAppSelector((state) => state.comments);
 
   return (
     <>
       <div className="property__gallery-container container">
         <div className="property__gallery">
           {
-            images.map((image) => (
+            imagesForRender.map((image) => (
               <div key={uuidv4()} className="property__image-wrapper">
                 <img className="property__image" src={image} alt="Studio" />
               </div>
@@ -44,14 +54,14 @@ function RoomCard(props: RoomCardProps): JSX.Element {
           </div>
           <div className="property__rating rating">
             <div className="property__stars rating__stars">
-              <span style={{width: '80%'}}></span>
+              <span style={{width: `${paintRating(rating)}%`}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
             <span className="property__rating-value rating__value">{rating}</span>
           </div>
           <ul className="property__features">
             <li className="property__feature property__feature--entire">
-              {type}
+              {correctType(type)}
             </li>
             <li className="property__feature property__feature--bedrooms">
               {bedrooms} Bedrooms
@@ -97,8 +107,8 @@ function RoomCard(props: RoomCardProps): JSX.Element {
           </div>
           <section className="property__reviews reviews">
             <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-            <PlaceReviewList reviews={reviews} />
-            <CommentForm />
+            <PlaceReviewList reviews={reviews}/>
+            {currentAuthorizationStatus===AuthorizationStatus.Auth&&<CommentForm />}
           </section>
         </div>
       </div>
