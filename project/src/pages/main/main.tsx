@@ -1,11 +1,11 @@
 import Header from '../../components/header/header';
 import Navigation from '../../components/navigation/navigation';
-import {Offer} from '../../types/offer';
 import CitiesList from '../../components/cities-list/cities-list';
-import { useAppDispatch } from '../../hooks';
-import { changeСity, getOfferId, resetOfferId } from '../../store/action';
 import EmptyContainer from '../../components/empty-container/empty-container';
 import FullContainer from '../../components/full-container/full-container';
+import { Offer } from '../../types/offer';
+import { useAppDispatch } from '../../hooks';
+import { changeСity, getOfferId, resetOfferId } from '../../store/action';
 
 type MainProps = {
   offers: Offer[];

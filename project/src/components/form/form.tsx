@@ -1,30 +1,37 @@
 import { FormEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
 import { postCommentAction } from '../../store/api-actions';
 import { NewReview } from '../../types/review';
 import FormRating from '../form-rating/form-rating';
 
-function CommentForm(): JSX.Element {
+type CommentFormProps = {
+  currentId: number
+};
+
+
+function CommentForm({currentId}: CommentFormProps): JSX.Element {
   const [newComment, setComment] = useState('');
   const newRating = useAppSelector((state) => state.commentRating);
 
-  const dispatch = useAppDispatch();
-
   const onSubmit = (newReview: NewReview) => {
-    dispatch(postCommentAction(newReview));
+    store.dispatch(postCommentAction(newReview));
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLButtonElement>) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({
-      comment: newComment,
-      rating: newRating,
-    });
-
+    onSubmit(
+      {
+        review: {
+          comment: newComment,
+          rating: newRating}
+        ,
+        id: currentId,
+      });
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form onSubmit={handleSubmit} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <FormRating />
@@ -42,7 +49,7 @@ function CommentForm(): JSX.Element {
         <p className="reviews__help">
               To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" onSubmit={handleSubmit} >Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" >Submit</button>
       </div>
     </form>
   );

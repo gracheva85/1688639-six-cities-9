@@ -1,3 +1,4 @@
+import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { getRating } from '../../store/action';
 
@@ -7,6 +8,7 @@ type FormRatingStarProps = {
 };
 
 function FormRatingStar({ stars, title }: FormRatingStarProps) {
+  const currentRating = useAppSelector((state) => state.commentRating);
 
   return (
     <>
@@ -16,7 +18,8 @@ function FormRatingStar({ stars, title }: FormRatingStarProps) {
         value={stars}
         id={`${stars}-stars`}
         type="radio"
-        onClick={()=>{store.dispatch(getRating(stars));}}
+        onChange={()=>{store.dispatch(getRating(stars));}}
+        checked={stars === currentRating}
       />
       <label htmlFor={`${stars}-stars`} className="reviews__rating-label form__rating-label" title={title}>
         <svg className="form__star-image" width="37" height="33">
