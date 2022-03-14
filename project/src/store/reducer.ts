@@ -1,38 +1,22 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeСity, getOfferId, resetOfferId, changeSorting, loadOffers, requireAuthorization, loadComments, resetComments, getLogin, getRating, loadOffersNearby, loadOffer} from './action';
-import { Cities, SortingType, AuthorizationStatus, DEFAULT_OFFER } from '../consts';
-import { Offer } from '../types/offer';
-import { Review } from '../types/review';
+import {changeСity, getOfferId, resetOfferId, changeSorting, loadOffers, requireAuthorization, loadComments, resetComments, setUser, getRating, loadOffersNearby} from './action';
+import { Cities, SortingType, AuthorizationStatus } from '../consts';
+import { InitalState } from '../types/initalState';
 
-type InitalState = {
-  city: string,
-  offerId: number,
-  sortingType: string,
-  offer: Offer,
-  offers: Offer[],
-  offersNearby: Offer[],
-  comments: Review[],
-  authorizationStatus: AuthorizationStatus,
-  isDataLoaded: boolean,
-  login: string,
-  commentRating: number,
-}
-
-const initialState: InitalState = {
+const initalState: InitalState = {
   city: Cities.PARIS,
   offerId: 0,
   sortingType: SortingType.POPULAR,
-  offer: DEFAULT_OFFER,
   offers: [],
   offersNearby: [],
   comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
-  login: '',
+  user: {},
   commentRating: 0,
 };
 
-const reducer = createReducer(initialState, (builder) => {
+const reducer = createReducer(initalState, (builder) => {
   builder
     .addCase(changeСity, (state, action) => {
       state.city = action.payload;
@@ -45,9 +29,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSorting, (state, action) => {
       state.sortingType = action.payload;
-    })
-    .addCase(loadOffer, (state, action) => {
-      state.offer = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
@@ -65,8 +46,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(getLogin, (state, action) => {
-      state.login = action.payload;
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
     })
     .addCase(getRating, (state, action) => {
       state.commentRating = action.payload;

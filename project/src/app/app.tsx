@@ -12,8 +12,9 @@ import { useAppSelector } from '../hooks';
 import { sortOffers } from '../common';
 import LoadingScreen from '../components/loading-screen/loading-screen';
 import HistoryRouter from '../components/history-route/history-route';
-import browserHistory from '../browser-history';
+import browserHistory from '../services/browser-history';
 import Room from '../pages/room/room';
+import { ToastContainer } from 'react-toastify';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
@@ -34,11 +35,12 @@ function App(): JSX.Element {
 
   return (
     <HistoryRouter history={browserHistory}>
+      <ToastContainer />
       <Routes>
         <Route index element={<Main offers={sortedOffers} />} />
         <Route path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={authorizationStatus}>
+            <PrivateRoute>
               <Favorites offers={offers}/>
             </PrivateRoute>
           }

@@ -1,7 +1,5 @@
 import {Link} from 'react-router-dom';
 import { correctType, paintRating } from '../../common';
-import { store } from '../../store';
-import { loadOffer } from '../../store/action';
 import {Offer} from '../../types/offer';
 
 type PlaceCardProps = {
@@ -17,11 +15,21 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
 
   const getCardMark = () => isPremium? <div className="place-card__mark"><span>Premium</span></div> : '';
 
+  // const changeTag = (child: JSX.Element | string) => {
+  //   if (redirect) {
+  //     return (
+  //       <a href={`/offer/${id}`} title='/offer'>
+  //         {child}
+  //       </a>
+  //     );} else {
+  //     <Link to={`/offer/${id}`} title='/offer'>{child}</Link>;
+  //   }
+  // };
+
   return (
     <article className={`${articleClassChange} place-card`}
       onMouseEnter={()=>{onListItemHover&&onListItemHover(id);}}
       onMouseLeave={()=>{onListItemHover&&onListItemHover(0);}}
-      onClick={()=>{store.dispatch(loadOffer(offer));}}
     >
       {getCardMark()}
       <div className={`${imgClassChange} place-card__image-wrapper`}>

@@ -1,27 +1,34 @@
-import Header from '../../components/header/header';
-import Navigation from '../../components/navigation/navigation';
-import PlaceCard from '../../components/place-card/place-card';
-import RoomCard from '../../components/room-card/room-card';
-import Map from '../../components/map/map';
+import Header from '../header/header';
+import Navigation from '../navigation/navigation';
+import PlaceCard from '../place-card/place-card';
+import RoomCard from '../room-card/room-card';
+import Map from '../map/map';
 import { useAppSelector } from '../../hooks';
 import { fetchOfferNearbyAction } from '../../store/api-actions';
 import { store } from '../../store';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function RoomProperty(): JSX.Element {
-  const currentOffer = useAppSelector((state) => state.offer);
+  const paramsId = Number(useParams().id);
+  const offers = useAppSelector((state) => state.offers);
+  const currentOffer = offers.filter((offer) => offer.id===paramsId)[0];
 
-  store.dispatch(fetchOfferNearbyAction());
+  useEffect(() => {
+    store.dispatch(fetchOfferNearbyAction(paramsId));
+  }, [paramsId]);
+
   const nextOffers =  useAppSelector((state) => state.offersNearby);
-  const offers = [...nextOffers, currentOffer];
+  const offersForMap = [...nextOffers, currentOffer];
 
   return (
     <div className="page">
       <Header navigation={<Navigation />}/>
       <main className="page__main page__main--property">
         <section className="property">
-          <RoomCard offer={currentOffer} />
+          <RoomCard offer={currentOffer} currentId={paramsId} />
           <section className="property__map map">
-            <Map offers={offers} />
+            <Map offers={offersForMap} currentId={paramsId} />
           </section>
         </section>
         <div className="container">
