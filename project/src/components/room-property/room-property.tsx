@@ -1,29 +1,31 @@
 import Header from '../header/header';
-import Navigation from '../navigation/navigation';
 import PlaceCard from '../place-card/place-card';
 import RoomCard from '../room-card/room-card';
 import Map from '../map/map';
-import { useAppSelector } from '../../hooks';
-import { fetchOfferNearbyAction } from '../../store/api-actions';
-import { store } from '../../store';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
+import {fetchOfferAction, fetchOfferNearbyAction} from '../../store/api-actions';
+import {store} from '../../store';
+import {useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 
 function RoomProperty(): JSX.Element {
   const paramsId = Number(useParams().id);
-  const offers = useAppSelector((state) => state.offers);
+  useEffect(() => {store.dispatch(fetchOfferAction());}, []);
+
+  const offers = useAppSelector(({DATA}) => DATA.offers);
   const currentOffer = offers.filter((offer) => offer.id===paramsId)[0];
+
 
   useEffect(() => {
     store.dispatch(fetchOfferNearbyAction(paramsId));
   }, [paramsId]);
 
-  const nextOffers =  useAppSelector((state) => state.offersNearby);
-  const offersForMap = [...nextOffers, currentOffer];
+  const offersNearby =  useAppSelector(({DATA}) => DATA.offersNearby);
+  const offersForMap = [...offersNearby, currentOffer];
 
   return (
     <div className="page">
-      <Header navigation={<Navigation />}/>
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <RoomCard offer={currentOffer} currentId={paramsId} />
@@ -36,7 +38,7 @@ function RoomProperty(): JSX.Element {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               {
-                nextOffers.map((item) => <PlaceCard key = {item.id} offer={item} articleClassChange={'near-places__card'} imgClassChange={'near-places__image-wrapper'} />)
+                offersNearby.map((item) => <PlaceCard key = {item.id} offer={item} articleClassChange={'near-places__card'} imgClassChange={'near-places__image-wrapper'} randerPlase={'PLAСE_CARD'} />)
               }
             </div>
           </section>
