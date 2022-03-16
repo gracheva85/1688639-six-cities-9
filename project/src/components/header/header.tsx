@@ -1,21 +1,24 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { AuthorizationStatus } from '../../consts';
+import { useAppSelector } from '../../hooks';
+import LogoHeader from '../logo-header/logo-header';
+import NavigationSignIn from '../navigation-sign-in/navigation-sign-in';
+import NavigationSignOut from '../navigation-sign-out/navigation-sign-out';
 
-type HeaderProps = {
-  navigation?: JSX.Element;
-}
+function Header(): JSX.Element {
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
-function Header({navigation}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link to={AppRoute.Root} title='/' className="header__logo-link">
-              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-            </Link>
+            <LogoHeader />
           </div>
-          {navigation}
+          <nav className="header__nav">
+            <ul className="header__nav-list">
+              {authorizationStatus===AuthorizationStatus.Auth ? <NavigationSignOut /> : <NavigationSignIn />}
+            </ul>
+          </nav>
         </div>
       </div>
     </header>

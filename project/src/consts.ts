@@ -39,14 +39,13 @@ enum APIRoute {
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
 }
 
-const ratingStars = [
-  { stars: 5, title: 'perfect' },
-  { stars: 4, title: 'good' },
-  { stars: 3, title: 'not bad' },
-  { stars: 2, title: 'badly' },
-  { stars: 1, title: 'terribly' },
-];
+enum NameSpace {
+  data = 'DATA',
+  offers = 'OFFERS',
+  user = 'USER',
+}
 
-export {AppRoute, AuthorizationStatus, Cities, SortingType, offersType, APIRoute, ratingStars};
+export {AppRoute, AuthorizationStatus, Cities, SortingType, offersType, APIRoute, NameSpace};
