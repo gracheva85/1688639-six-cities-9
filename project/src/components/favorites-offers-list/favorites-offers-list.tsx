@@ -1,20 +1,24 @@
-import {useAppSelector} from '../../hooks';
+import { RenderPlase } from '../../settings';
 import {Offer} from '../../types/offer';
 import PlaceCard from '../place-card/place-card';
 
+const articleClass = 'favorites__card';
+const imgClass = 'favorites__image-wrapper';
+const cardListPlace = RenderPlase.PlaceCard;
+
 type FavoritesOffersProps = {
-  city: string
+  city: string,
+  offers: Offer[],
 };
 
-function FavoritesOffersList({city}: FavoritesOffersProps): JSX.Element {
-  const offersFavorite = useAppSelector(({DATA}) => DATA.offersFavorite);
-  const getFavoriteOffersInCity = () => offersFavorite.filter((offer: Offer) => offer.city.name===city);
+function FavoritesOffersList({city, offers}: FavoritesOffersProps): JSX.Element {
+  const getFavoriteOffersInCity = () => offers.filter((offer: Offer) => offer.city.name===city);
 
   return (
-    <div className="favorites__places">
+    <div className="favorites__places" data-testid="OffersList">
       {
         getFavoriteOffersInCity().map((offer: Offer) => (
-          <PlaceCard key={offer.id} offer={offer} favorites articleClassChange={'favorites__card'} imgClassChange={'favorites__image-wrapper'} randerPlase={'PLAСE_CARD'} />
+          <PlaceCard key={offer.id} offer={offer} favorites articleClassChange={articleClass} imgClassChange={imgClass} renderPlace={cardListPlace} />
         ))
       }
     </div>

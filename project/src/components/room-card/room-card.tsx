@@ -1,15 +1,13 @@
-import CommentForm from '../form/form';
+import CommentForm from '../comment-form/comment-form';
 import { v4 as uuidv4 } from 'uuid';
 import PlaceReviewList from '../place-review-list/place-review-list';
 import { Offer } from '../../types/offer';
 import { correctType, paintRating } from '../../common';
 import { AuthorizationStatus } from '../../consts';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
-import { fetchCommentAction } from '../../store/api-actions';
-import { useEffect } from 'react';
-import useButtonFavorite from '../../hooks/useButtonFavorite';
-import FavoriteButton from '../favorite-button-wrapper/favorite-button';
+import FavoriteButton from '../favorite-button/favorite-button';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getComments } from '../../store/offers-data/selectors';
 
 type RoomCardProps = {
   offer: Offer;
@@ -22,21 +20,15 @@ function RoomCard({offer, currentId}: RoomCardProps): JSX.Element {
 
   const getPropertyMark = () => isPremium? <div className="property__mark"><span>Premium</span></div> : '';
 
-  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  useEffect(() => {
-    store.dispatch(fetchCommentAction(currentId));
-  }, [currentId]);
-
-  const comments = useAppSelector(({DATA}) => DATA.comments);
-  const sortReviews = comments.slice(0, 10).sort((a, b)=> new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  const [favoriteClass, handleButtonClick] = useButtonFavorite(isFavorite);
+  const comments = useAppSelector(getComments);
+  const sortReviews = comments.slice().sort((a, b)=> new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
 
   return (
     <>
-      <div className="property__gallery-container container">
-        <div className="property__gallery">
+      <div className="property__gallery-container container" data-testid="RoomCard">
+        <div data-testid="Gallery" className="property__gallery">
           {
             imagesForRender.map((image) => (
               <div key={uuidv4()} className="property__image-wrapper">
@@ -50,15 +42,13 @@ function RoomCard({offer, currentId}: RoomCardProps): JSX.Element {
         <div className="property__wrapper">
           {getPropertyMark()}
           <div className="property__name-wrapper">
-            <h1 className="property__name">
+            <h1 className="property__name" data-testid="RoomTitle">
               {title}
             </h1>
             <FavoriteButton
-              authorizationStatus={authorizationStatus}
-              favoriteClass={favoriteClass}
-              handleButtonClick={handleButtonClick}
+              isFavorite={isFavorite}
               id={id}
-              randerPlase={'PROPERTY'}
+              renderPlace={'Property'}
             />
           </div>
           <div className="property__rating rating">
@@ -69,7 +59,7 @@ function RoomCard({offer, currentId}: RoomCardProps): JSX.Element {
             <span className="property__rating-value rating__value">{rating}</span>
           </div>
           <ul className="property__features">
-            <li className="property__feature property__feature--entire">
+            <li data-testid="RoomType" className="property__feature property__feature--entire">
               {correctType(type)}
             </li>
             <li className="property__feature property__feature--bedrooms">
@@ -115,7 +105,7 @@ function RoomCard({offer, currentId}: RoomCardProps): JSX.Element {
             </div>
           </div>
           <section className="property__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{sortReviews.length}</span></h2>
             <PlaceReviewList reviews={sortReviews}/>
             {authorizationStatus===AuthorizationStatus.Auth&&<CommentForm currentId={currentId}/>}
           </section>

@@ -1,37 +1,36 @@
 import { memo } from 'react';
-import {Link} from 'react-router-dom';
+import {generatePath, Link} from 'react-router-dom';
 import { correctType, paintRating } from '../../common';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import useButtonFavorite from '../../hooks/useButtonFavorite';
+import { AppRoute } from '../../consts';
+import { useAppDispatch } from '../../hooks';
 import { getOfferId, resetOfferId } from '../../store/offers-process/offers-process';
 import {Offer} from '../../types/offer';
-import FavoriteButton from '../favorite-button-wrapper/favorite-button';
+import { RenderPlace } from '../../types/renderPlace';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type PlaceCardProps = {
   offer: Offer;
   articleClassChange: string;
   imgClassChange: string;
   favorites?: boolean;
-  randerPlase: 'PLAСE_CARD' | 'PROPERTY',
+  renderPlace: RenderPlace,
 };
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {offer, articleClassChange,  imgClassChange, favorites, randerPlase} = props;
+  const {offer, articleClassChange,  imgClassChange, favorites, renderPlace} = props;
   const {images, price, title, type, isPremium, id, rating, isFavorite, previewImage} = offer;
   const dispatch = useAppDispatch();
   const getCardMark = () => isPremium? <div className="place-card__mark"><span>Premium</span></div> : '';
-  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
-
-  const [favoriteClass, handleButtonClick] = useButtonFavorite(isFavorite);
 
   return (
     <article className={`${articleClassChange} place-card`}
       onMouseEnter={()=>{dispatch(getOfferId(id));}}
       onMouseLeave={()=>{dispatch(resetOfferId());}}
+      data-testid="PlaceCard"
     >
       {getCardMark()}
       <div className={`${imgClassChange} place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`} title='/offer'>
+        <Link data-testid="ImageLink" to={generatePath(AppRoute.Hotel, { id: String(id) })} title='/offer'>
           {favorites?
             <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place" /> :
             <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />}
@@ -44,11 +43,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <FavoriteButton
-            authorizationStatus={authorizationStatus}
-            favoriteClass={favoriteClass}
-            handleButtonClick={handleButtonClick}
+            isFavorite={isFavorite}
             id={id}
-            randerPlase={randerPlase}
+            renderPlace={renderPlace}
           />
         </div>
         <div className="place-card__rating rating">
@@ -58,9 +55,9 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`} title='/offer'>{title}</Link>
+          <Link data-testid="TitleLink" to={`/offer/${id}`} title='/offer'>{title}</Link>
         </h2>
-        <p className="place-card__type">{correctType(type)}</p>
+        <p className="place-card__type" data-testid="title" >{correctType(type)}</p>
       </div>
     </article>
   );

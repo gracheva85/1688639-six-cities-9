@@ -9,7 +9,7 @@ type PlaceReviewListProps = {
 function PlaceReviewList({reviews}: PlaceReviewListProps): JSX.Element {
 
   return (
-    <ul className="reviews__list">
+    <ul className="reviews__list" data-testid="ReviewList">
       {
         reviews.map((review) => (
           <PlaceReview key={review.id} review={review} />

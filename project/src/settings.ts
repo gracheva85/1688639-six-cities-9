@@ -1,29 +1,32 @@
 const LogoType = {
-  HEADER: {
-    type: 'header',
-    width: '81',
-    height: '41',
+  Header: {
+    Type: 'header',
+    Width: '81',
+    Height: '41',
   },
-  FOOTER: {
-    type: 'footer',
-    width: '64',
-    height: '33',
+  Footer: {
+    Type: 'footer',
+    Width: '64',
+    Height: '33',
   },
 };
 
 const FavoriteButtonClass = {
-  PLAСE_CARD: {
-    name: 'PLAСE_CARD',
-    type: 'place-card',
-    width: '18',
-    height: '19',
+  PlaceCard: {
+    Type: 'place-card',
+    Width: '18',
+    Height: '19',
   },
-  PROPERTY: {
-    name: 'PROPERTY',
-    type: 'property',
-    width: '31',
-    height: '33',
+  Property: {
+    Type: 'property',
+    Width: '31',
+    Height: '33',
   },
 };
 
-export {LogoType, FavoriteButtonClass};
+const enum RenderPlase {
+  PlaceCard = 'PlaceCard',
+  Property = 'Property'
+}
+
+export {LogoType, FavoriteButtonClass, RenderPlase};

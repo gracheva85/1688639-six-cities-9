@@ -1,17 +1,18 @@
-import { memo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { getUserAction, logoutAction } from '../../store/api-actions';
+import { getUser } from '../../store/user-process/selectors';
 
 function NavigationSignOut(): JSX.Element {
   useEffect(()=>{store.dispatch(getUserAction());}, []);
-  const user = useAppSelector(({USER}) => USER.user);
+  const user = useAppSelector(getUser);
 
   return (
     <>
-      <li className="header__nav-item user">
+      <li className="header__nav-item user" data-testid="SignOut">
         <Link
           to={AppRoute.Favorites}
           title='/favorites'
@@ -29,8 +30,9 @@ function NavigationSignOut(): JSX.Element {
           onClick={(evt) => {
             evt.preventDefault();
             store.dispatch(logoutAction());
-          } }
+          }}
           className="header__nav-link"
+          data-testid="SignOutLink"
         >
           <span className="header__signout">Sign out</span>
         </Link>
@@ -39,4 +41,4 @@ function NavigationSignOut(): JSX.Element {
   );
 }
 
-export default memo(NavigationSignOut);
+export default NavigationSignOut;
