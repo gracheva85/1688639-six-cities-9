@@ -11,6 +11,7 @@ import {AuthorizationStatus} from '../../consts';
 const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
 const mockId = 1;
+const history = createMemoryHistory();
 
 const store = mockStore({
   User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser},
@@ -20,7 +21,6 @@ const store = mockStore({
 describe('Component: CommentForm', () => {
 
   it('should render "CommentForm"', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={store}>
@@ -42,7 +42,6 @@ describe('Component: CommentForm', () => {
   });
 
   it('button "Submit" should be disabled if the user has entered invalid text', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={store}>
@@ -60,7 +59,6 @@ describe('Component: CommentForm', () => {
   });
 
   it('button "Submit" should be disabled if the user dont choose invalid rating', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser}, Offers: {commentRating: 0}})}>
@@ -77,7 +75,6 @@ describe('Component: CommentForm', () => {
   });
 
   it('button "Submit" should be abled if the user entered valid data', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={store}>
