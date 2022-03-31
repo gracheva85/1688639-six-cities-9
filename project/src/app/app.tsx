@@ -10,12 +10,21 @@ import LoadingScreen from '../components/loading-screen/loading-screen';
 import Room from '../pages/room/room';
 import { getAuthorizationStatus } from '../store/user-process/selectors';
 import { getDataLoaded } from '../store/offers-data/selectors';
+import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
+import { store } from '../store';
+import { checkAuthAction, fetchOfferAction } from '../store/api-actions';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
+  useEffect(()=>{
+    store.dispatch(fetchOfferAction());
+    store.dispatch(checkAuthAction());
+  }, []);
+
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoaded = useAppSelector(getDataLoaded);
 

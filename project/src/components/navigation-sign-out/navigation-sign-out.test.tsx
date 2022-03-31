@@ -13,9 +13,9 @@ const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
 
 describe('Component: NavigationSignOut', () => {
+  const history = createMemoryHistory();
 
   it('should render correctly', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser}})}>
@@ -31,7 +31,6 @@ describe('Component: NavigationSignOut', () => {
   });
 
   it('should redirect to Favorite url when user clicked to mockUser.email', () => {
-    const history = createMemoryHistory();
 
     history.push('/');
 

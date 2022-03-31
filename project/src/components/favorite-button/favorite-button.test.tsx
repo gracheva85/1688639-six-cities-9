@@ -14,9 +14,9 @@ const mockRenderPlace = 'PlaceCard';
 const mockStore = configureMockStore();
 
 describe('Component: FavoriteButton', () => {
+  const history = createMemoryHistory();
 
   it('should render correctly', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth}})}>
@@ -31,7 +31,6 @@ describe('Component: FavoriteButton', () => {
   });
 
   it('should redirect to SignIn url when user clicked to link, if authorizationStatus = NoAuth', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth}})}>
@@ -56,7 +55,6 @@ describe('Component: FavoriteButton', () => {
   });
 
   it('should change class when isFavorite===true && authorizationStatus===Auth', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth}})}>
@@ -70,7 +68,6 @@ describe('Component: FavoriteButton', () => {
   });
 
   it('should dispatch data, when user clicked to link, if authorizationStatus===Auth', () => {
-    const history = createMemoryHistory();
 
     const dispatch = jest.fn();
 
@@ -89,5 +86,3 @@ describe('Component: FavoriteButton', () => {
     expect(useDispatch).toBeCalledTimes(1);
   });
 });
-
-

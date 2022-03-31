@@ -11,7 +11,6 @@ import {AuthorizationStatus} from '../../consts';
 const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
 const mockId = 1;
-const history = createMemoryHistory();
 
 const store = mockStore({
   User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser},
@@ -19,6 +18,7 @@ const store = mockStore({
 });
 
 describe('Component: CommentForm', () => {
+  const history = createMemoryHistory();
 
   it('should render "CommentForm"', () => {
 

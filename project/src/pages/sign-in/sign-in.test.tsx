@@ -13,8 +13,9 @@ const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
 
 describe('Component: SignIn', () => {
+  const history = createMemoryHistory();
+
   it('should render "SignIn" when user navigate to "login" url', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth, user: mockUser}})}>
@@ -36,7 +37,6 @@ describe('Component: SignIn', () => {
   });
 
   it('should redirect to root url when user clicked to button "RandomCity"', () => {
-    const history = createMemoryHistory();
 
     history.push('/fake');
 
@@ -63,7 +63,6 @@ describe('Component: SignIn', () => {
   });
 
   it('the button "Sign In" should be disabled if the user has entered invalid password.', () => {
-    const history = createMemoryHistory();
 
     history.push('/fake');
 

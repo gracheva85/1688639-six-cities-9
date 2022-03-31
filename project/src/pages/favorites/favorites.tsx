@@ -2,12 +2,12 @@ import Header from '../../components/header/header';
 import FavoritesFull from '../../components/favorites-full/favorites-full';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { store } from '../../store';
-import { fetchFavoriteAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { LogoType } from '../../settings';
 import { filtredOfferSelector } from '../../store/offers-data/selectors';
 import { useAppSelector } from '../../hooks';
 import { getFavorite } from '../../store/offers-data/selectors';
+import { fetchFavoriteAction } from '../../store/api-actions';
 
 function Favorites(): JSX.Element {
   useEffect(()=>{store.dispatch(fetchFavoriteAction());}, []);

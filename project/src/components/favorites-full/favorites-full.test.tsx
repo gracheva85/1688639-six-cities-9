@@ -12,10 +12,9 @@ import { Route, Routes } from 'react-router-dom';
 const mockOffers = [makeFakeOffer(), makeFakeOffer()];
 const mockStore = configureMockStore();
 
-describe('Component: FavoritesFull', () =>
-{
+describe('Component: FavoritesFull', () => {
+  const history = createMemoryHistory();
   it('should render correctly', () => {
-    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth}, Data: {offersFavorite: mockOffers}})}>
@@ -30,7 +29,6 @@ describe('Component: FavoritesFull', () =>
   });
 
   it('should redirect to root url when user clicked to button "City"', () => {
-    const history = createMemoryHistory();
 
     history.push('/fake');
 
