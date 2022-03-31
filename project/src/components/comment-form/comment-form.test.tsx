@@ -11,25 +11,24 @@ import {AuthorizationStatus} from '../../consts';
 const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
 const mockId = 1;
-const history = createMemoryHistory();
 
 const store = mockStore({
   User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser},
   Offers: {commentRating: 1},
 });
 
-const fakeCommentForm = (
-  <Provider store={store}>
-    <HistoryRouter history={history}>
-      <CommentForm currentId={mockId} />
-    </HistoryRouter>
-  </Provider>
-);
-
 describe('Component: CommentForm', () => {
-  it('should render "CommentForm"', () => {
 
-    render(fakeCommentForm);
+  it('should render "CommentForm"', () => {
+    const history = createMemoryHistory();
+
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <CommentForm currentId={mockId} />
+        </HistoryRouter>
+      </Provider>,
+    );
 
     const commentInput = screen.getByPlaceholderText('Tell how was your stay, what you like and what can be improved');
 
@@ -43,8 +42,15 @@ describe('Component: CommentForm', () => {
   });
 
   it('button "Submit" should be disabled if the user has entered invalid text', () => {
+    const history = createMemoryHistory();
 
-    render(fakeCommentForm);
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <CommentForm currentId={mockId} />
+        </HistoryRouter>
+      </Provider>,
+    );
 
     const commentInput = screen.getByPlaceholderText('Tell how was your stay, what you like and what can be improved');
 
@@ -52,7 +58,9 @@ describe('Component: CommentForm', () => {
     expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
     expect(screen.getByTestId('Submit')).toBeDisabled();
   });
+
   it('button "Submit" should be disabled if the user dont choose invalid rating', () => {
+    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser}, Offers: {commentRating: 0}})}>
@@ -69,8 +77,15 @@ describe('Component: CommentForm', () => {
   });
 
   it('button "Submit" should be abled if the user entered valid data', () => {
+    const history = createMemoryHistory();
 
-    render(fakeCommentForm);
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <CommentForm currentId={mockId} />
+        </HistoryRouter>
+      </Provider>,
+    );
 
     const commentInput = screen.getByPlaceholderText('Tell how was your stay, what you like and what can be improved');
 

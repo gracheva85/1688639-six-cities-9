@@ -9,13 +9,13 @@ import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-const history = createMemoryHistory();
 const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
 
 describe('Component: NavigationSignOut', () => {
 
   it('should render correctly', () => {
+    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser}})}>
@@ -31,6 +31,8 @@ describe('Component: NavigationSignOut', () => {
   });
 
   it('should redirect to Favorite url when user clicked to mockUser.email', () => {
+    const history = createMemoryHistory();
+
     history.push('/');
 
     render (

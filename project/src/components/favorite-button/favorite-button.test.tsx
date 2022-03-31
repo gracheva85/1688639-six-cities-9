@@ -9,13 +9,15 @@ import HistoryRouter from '../history-route/history-route';
 import FavoriteButton from './favorite-button';
 import * as Redux from 'react-redux';
 
-const history = createMemoryHistory();
 const mockId = 1;
 const mockRenderPlace = 'PlaceCard';
 const mockStore = configureMockStore();
 
 describe('Component: FavoriteButton', () => {
+
   it('should render correctly', () => {
+    const history = createMemoryHistory();
+
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth}})}>
         <HistoryRouter history={history}>
@@ -29,6 +31,7 @@ describe('Component: FavoriteButton', () => {
   });
 
   it('should redirect to SignIn url when user clicked to link, if authorizationStatus = NoAuth', () => {
+    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth}})}>
@@ -53,6 +56,7 @@ describe('Component: FavoriteButton', () => {
   });
 
   it('should change class when isFavorite===true && authorizationStatus===Auth', () => {
+    const history = createMemoryHistory();
 
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth}})}>
@@ -66,6 +70,8 @@ describe('Component: FavoriteButton', () => {
   });
 
   it('should dispatch data, when user clicked to link, if authorizationStatus===Auth', () => {
+    const history = createMemoryHistory();
+
     const dispatch = jest.fn();
 
     const useDispatch = jest.spyOn(Redux, 'useDispatch');

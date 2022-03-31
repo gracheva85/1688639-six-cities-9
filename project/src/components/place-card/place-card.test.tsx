@@ -14,12 +14,13 @@ const mockStore = configureMockStore();
 const mockOffer = makeFakeOffer();
 const articleClass = 'cities__place-card';
 const imgClass = 'cities__image-wrapper';
-const history = createMemoryHistory();
 const mockUser = makeFakeUser();
 
 describe('Component: PlaceCard', () => {
 
   it('should render correctly', () => {
+    const history = createMemoryHistory();
+
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.Auth, user: mockUser}})}>
         <HistoryRouter history={history} >
@@ -38,6 +39,8 @@ describe('Component: PlaceCard', () => {
   });
 
   it('should redirect to SignIn url when user clicked to button, AuthorizationStatus===NoAuth', () => {
+    const history = createMemoryHistory();
+
     history.push('/');
 
     render(
@@ -63,6 +66,8 @@ describe('Component: PlaceCard', () => {
   });
 
   it('should redirect to Room url when user clicked on image', () => {
+    const history = createMemoryHistory();
+
     history.push('/');
 
     render(
@@ -88,6 +93,8 @@ describe('Component: PlaceCard', () => {
   });
 
   it('should redirect to Room url when user clicked on title', () => {
+    const history = createMemoryHistory();
+
     history.push('/');
 
     render(

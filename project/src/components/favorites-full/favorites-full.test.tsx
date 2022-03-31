@@ -9,13 +9,14 @@ import FavoritesFull from './favorites-full';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 
-const history = createMemoryHistory();
 const mockOffers = [makeFakeOffer(), makeFakeOffer()];
 const mockStore = configureMockStore();
 
 describe('Component: FavoritesFull', () =>
 {
   it('should render correctly', () => {
+    const history = createMemoryHistory();
+
     render(
       <Provider store={mockStore({User: {authorizationStatus: AuthorizationStatus.NoAuth}, Data: {offersFavorite: mockOffers}})}>
         <HistoryRouter history={history}>
@@ -29,6 +30,8 @@ describe('Component: FavoritesFull', () =>
   });
 
   it('should redirect to root url when user clicked to button "City"', () => {
+    const history = createMemoryHistory();
+
     history.push('/fake');
 
     render(
