@@ -2,7 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { AppRoute } from '../consts';
 
 export const ActionType = {
-  REDIRECT_TO_ROUTER: 'redirectToRoute',
+  RedirectToRoute: 'user/redirectToRoute',
 };
 
-export const redirectToRoute = createAction<AppRoute>(ActionType.REDIRECT_TO_ROUTER);
+export const redirectToRoute = createAction<AppRoute>(ActionType.RedirectToRoute);

@@ -3,21 +3,28 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {useEffect, useRef} from 'react';
 import {useAppSelector} from '../../hooks';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/useMap/useMap';
+import { getId } from '../../store/offers-process/selectors';
 import {Offer} from '../../types/offer';
 
-const PIN = {
-  URL_DEFAULT: '/img/pin.svg',
-  URL_CUSTOM: '/img/pin-active.svg',
+const DEFAULT = {
+  URL: '/img/pin.svg',
+  ALT: 'offer',
+};
+
+const CUSTOM = {
+  URL: '/img/pin-active.svg',
+  ALT: 'selected offer',
 };
 
 type MapProps = {
   offers: Offer[];
-  currentId?: number;
+  idNearbyOffer?: number;
 };
 
-function Map({offers, currentId}: MapProps) {
-  const offerId = useAppSelector(({OFFERS}) => OFFERS.offerId);
+function Map({offers, idNearbyOffer}: MapProps): JSX.Element {
+  const offerId = useAppSelector(getId);
+  const idForMap = idNearbyOffer ? idNearbyOffer : offerId;
   const mapRef = useRef(null);
   const cityCenter = offers[0].city;
   const markerGroup = useRef(L.layerGroup());
@@ -25,13 +32,13 @@ function Map({offers, currentId}: MapProps) {
   const {location: {latitude: lat, longitude: lng, zoom}} = cityCenter;
 
   const defaultCustomIcon = leaflet.icon({
-    iconUrl: PIN.URL_DEFAULT,
+    iconUrl: DEFAULT.URL,
     iconSize: [27, 39],
     iconAnchor: [13, 39],
   });
 
   const currentCustomIcon = leaflet.icon({
-    iconUrl: PIN.URL_CUSTOM,
+    iconUrl: CUSTOM.URL,
     iconSize: [27, 39],
     iconAnchor: [13, 39],
   });
@@ -49,19 +56,21 @@ function Map({offers, currentId}: MapProps) {
             lat: latitude,
             lng: longitude,
           }, {
-            icon: (id === currentId || id === offerId)
+            icon: (id === idForMap)
               ? currentCustomIcon
               : defaultCustomIcon,
+            alt: id === idForMap ? CUSTOM.ALT : DEFAULT.ALT,
           })
           .addTo(markerGroup.current);
       });
       map.flyTo([lat, lng], zoom);
     }
 
-  }, [currentCustomIcon, currentId, defaultCustomIcon, lat, lng, map, markerGroup, offers, offerId, zoom]);
+  }, [currentCustomIcon, defaultCustomIcon, lat, lng, map, markerGroup, offers, offerId, zoom, idForMap]);
 
   return (
     <div
+      data-testid="Map"
       style={{height: '100%'}}
       ref={mapRef}
     >
