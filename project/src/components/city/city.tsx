@@ -8,6 +8,7 @@ import { getCity } from '../../store/offers-process/selectors';
 type CityProps = {
   currentCity: string;
 }
+
 function City({currentCity}: CityProps): JSX.Element {
   const city = useAppSelector(getCity);
   const hoverCityClick = () =>  store.dispatch(changeСity(currentCity));
