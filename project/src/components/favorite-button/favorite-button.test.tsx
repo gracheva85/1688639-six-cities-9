@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../consts';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import FavoriteButton from './favorite-button';
 import * as Redux from 'react-redux';
 

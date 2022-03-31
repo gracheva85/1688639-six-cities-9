@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import {render, screen} from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { makeFakeOffer } from '../../utils/mocks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import Map from '../map/map';
 
 describe('Component: Map', () => {

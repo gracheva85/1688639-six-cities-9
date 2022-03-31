@@ -17,7 +17,7 @@ const ApiActionType = {
   FetchOffers: 'data/fetchOffers',
   FetchOffer: 'data/fetchOffer',
   FetchHotel: 'data/fetchHotel',
-  FetchFavoritOffers: 'data/fetchFavoritOffers',
+  FetchFavouriteOffers: 'data/fetchFavouriteOffers',
   FetchOffersNearby: 'data/fetchOffersNearby',
   FetchComments: 'data/loadComments',
   CheckAuth: 'user/checkAuth',
@@ -60,12 +60,12 @@ const fetchRoomAction = createAsyncThunk<void, number, {
   },
 );
 
-const fetchFavoriteAction = createAsyncThunk<void, undefined, {
+const fetchFavouriteAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
-  ApiActionType.FetchFavoritOffers,
+  ApiActionType.FetchFavouriteOffers,
   async (_arg, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Favorite);
@@ -218,7 +218,7 @@ export {
   loginAction,
   logoutAction,
   fetchOfferNearbyAction,
-  fetchFavoriteAction,
+  fetchFavouriteAction,
   postCommentAction,
   getUserAction,
   postFavoriteAction,

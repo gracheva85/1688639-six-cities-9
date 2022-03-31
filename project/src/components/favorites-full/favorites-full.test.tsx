@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { AuthorizationStatus } from '../../consts';
 import { makeFakeOffer } from '../../utils/mocks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import FavoritesFull from './favorites-full';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';

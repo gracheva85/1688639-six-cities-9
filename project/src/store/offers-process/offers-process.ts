@@ -13,7 +13,7 @@ const offersProcess = createSlice({
   name: NameSpace.Offers,
   initialState,
   reducers: {
-    changeСity: (state, action) => {
+    changeCity: (state, action) => {
       state.city = action.payload;
     },
     getOfferId: (state, action) => {
@@ -31,6 +31,6 @@ const offersProcess = createSlice({
   },
 });
 
-const {changeСity, getOfferId, resetOfferId, changeSorting, getRating} = offersProcess.actions;
+const {changeCity, getOfferId, resetOfferId, changeSorting, getRating} = offersProcess.actions;
 
-export {offersProcess, changeСity, getOfferId, resetOfferId, changeSorting, getRating};
+export {offersProcess, changeCity, getOfferId, resetOfferId, changeSorting, getRating};

@@ -1,5 +1,4 @@
 import { Offer } from '../types/offer';
-import {AuthData} from '../types/auth-data';
 import {Review} from '../types/review';
 import {datatype, address, lorem, image, internet} from 'faker';
 
@@ -48,11 +47,6 @@ const makeFakeOffer = (): Offer => ({
   }),
   title: lorem.text(),
   type: lorem.word(),
-});
-
-const makeFakeAuthData = (): AuthData => ({
-  login: internet.email(),
-  password: internet.password(),
 });
 
 const makeFakeReview = (): Review => ({
@@ -105,4 +99,4 @@ const makeNewStatus = () => ({
   status: 1,
 });
 
-export {makeFakeOffer, makeFakeAuthData, makeFakeReview, makeFakeNewReview, makeUserData, makeUser, makeNewStatus, makeFakeUser};
+export {makeFakeOffer, makeFakeReview, makeFakeNewReview, makeUserData, makeUser, makeNewStatus, makeFakeUser};

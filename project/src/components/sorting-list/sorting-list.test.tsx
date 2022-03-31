@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { SortingType } from '../../consts';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import SortingList from './sorting-list';
 
 const mockStore = configureMockStore();

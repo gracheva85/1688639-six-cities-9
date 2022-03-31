@@ -2,7 +2,7 @@ import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppSelector} from '../../hooks';
 import {store} from '../../store';
-import {changeСity} from '../../store/offers-process/offers-process';
+import {changeCity} from '../../store/offers-process/offers-process';
 import { getCity } from '../../store/offers-process/selectors';
 
 type CityProps = {
@@ -11,7 +11,7 @@ type CityProps = {
 
 function City({currentCity}: CityProps): JSX.Element {
   const city = useAppSelector(getCity);
-  const hoverCityClick = () =>  store.dispatch(changeСity(currentCity));
+  const hoverCityClick = () =>  store.dispatch(changeCity(currentCity));
 
   return (
     <li onClick={hoverCityClick}

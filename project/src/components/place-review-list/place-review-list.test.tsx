@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { makeFakeReview } from '../../utils/mocks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import PlaceReviewList from './place-review-list';
 
 const mockStore = configureMockStore();

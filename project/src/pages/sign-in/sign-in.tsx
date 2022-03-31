@@ -5,7 +5,7 @@ import { AuthorizationStatus, Cities } from '../../consts';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { store } from '../../store';
 import {loginAction} from '../../store/api-actions';
-import { changeСity } from '../../store/offers-process/offers-process';
+import { changeCity } from '../../store/offers-process/offers-process';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import {AuthData} from '../../types/auth-data';
 import Main from '../main/main';
@@ -39,7 +39,7 @@ function SignIn(): JSX.Element {
 
   const cities = Object.values(Cities);
   const randomCity = cities[Math.floor(Math.random()*cities.length)];
-  const handleCityChange = useCallback(()=>store.dispatch(changeСity(randomCity)),[randomCity]);
+  const handleCityChange = useCallback(()=>store.dispatch(changeCity(randomCity)),[randomCity]);
 
   if (authorizationStatus===AuthorizationStatus.Auth) {
     return <Main/>;

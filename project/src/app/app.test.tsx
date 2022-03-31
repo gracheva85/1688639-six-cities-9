@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 
 import App from './app';
-import HistoryRouter from '../components/history-route/history-route';
+import HistoryRouter from '../components/history-route/history-router';
 import { AppRoute, AuthorizationStatus } from '../consts';
 import { makeFakeOffer, makeFakeReview, makeFakeUser } from '../utils/mocks';
 import { generatePath } from 'react-router-dom';

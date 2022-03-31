@@ -7,15 +7,15 @@ import { LogoType } from '../../settings';
 import { filtredOfferSelector } from '../../store/offers-data/selectors';
 import { useAppSelector } from '../../hooks';
 import { getFavorite } from '../../store/offers-data/selectors';
-import { fetchFavoriteAction } from '../../store/api-actions';
+import { fetchFavouriteAction } from '../../store/api-actions';
 
 function Favorites(): JSX.Element {
-  useEffect(()=>{store.dispatch(fetchFavoriteAction());}, []);
+  useEffect(()=>{store.dispatch(fetchFavouriteAction());}, []);
   const offersFavorite = filtredOfferSelector(store.getState());
   const offers = useAppSelector(getFavorite);
 
   return (
-    <div data-testid="Favorites" className={`page ${offersFavorite.length ===0 ? 'page--favorites-empty' : ''}`}>
+    <div data-testid="Favorites" className={`page ${offers.length ===0 ? 'page--favorites-empty' : ''}`}>
       <Header />
       {offers.length>0 ? <FavoritesFull offers={offersFavorite}/> : <FavoritesEmpty />}
       <footer className="footer container" data-testid="FavoritesFooter">

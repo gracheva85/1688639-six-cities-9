@@ -4,7 +4,7 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import SignIn from './sign-in';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-route/history-router';
 import { makeFakeUser } from '../../utils/mocks';
 import { Routes, Route } from 'react-router-dom';
 import { AuthorizationStatus } from '../../consts';

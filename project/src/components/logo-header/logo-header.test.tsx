@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import { Route, Routes } from 'react-router-dom';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../history-route/history-router';
 import LogoHeader from './logo-header';
 import userEvent from '@testing-library/user-event';
 
