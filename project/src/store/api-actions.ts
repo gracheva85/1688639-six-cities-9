@@ -142,7 +142,7 @@ const postCommentAction = createAsyncThunk<void, NewReview, {
   },
 );
 
-const postFavoriteAction = createAsyncThunk<void, NewStatus, {
+const postFavouriteAction = createAsyncThunk<void, NewStatus, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -221,6 +221,6 @@ export {
   fetchFavouriteAction,
   postCommentAction,
   getUserAction,
-  postFavoriteAction,
+  postFavouriteAction,
   ApiActionType
 };

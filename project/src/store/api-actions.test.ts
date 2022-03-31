@@ -3,7 +3,7 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createAPI} from '../services/api';
-import {fetchOfferAction, fetchCommentAction, checkAuthAction, loginAction, logoutAction, fetchOfferNearbyAction, fetchFavouriteAction, postCommentAction, getUserAction, postFavoriteAction, fetchRoomAction} from './api-actions';
+import {fetchOfferAction, fetchCommentAction, checkAuthAction, loginAction, logoutAction, fetchOfferNearbyAction, fetchFavouriteAction, postCommentAction, getUserAction, postFavouriteAction, fetchRoomAction} from './api-actions';
 import {requireAuthorization, setUser} from './user-process/user-process';
 import {APIRoute} from '../consts';
 import {State} from '../types/state';
@@ -156,7 +156,7 @@ describe('Async actions', () => {
     const store = mockStore();
     Storage.prototype.setItem = jest.fn();
 
-    await store.dispatch(postFavoriteAction(mockStatus));
+    await store.dispatch(postFavouriteAction(mockStatus));
 
     const actions = store.getActions().map(({type}) => type);
     expect(actions).toContain(updateFavorites.toString());

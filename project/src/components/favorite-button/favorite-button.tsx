@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FavoriteButtonClass } from '../../settings';
-import { postFavoriteAction } from '../../store/api-actions';
+import { postFavouriteAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { RenderPlace } from '../../types/renderPlace';
 
@@ -23,7 +23,7 @@ function FavoriteButton({isFavorite, id, renderPlace}: FavoriteButtonProps): JSX
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleButtonClick = useCallback(() => {
-    dispatch(postFavoriteAction({id: id,status: status}));
+    dispatch(postFavouriteAction({id: id,status: status}));
   },[dispatch, id, status]);
 
   if (authorizationStatus === AuthorizationStatus.NoAuth) {
