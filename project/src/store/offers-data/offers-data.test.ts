@@ -7,198 +7,72 @@ const offer = makeFakeOffer();
 const offers = [makeFakeOffer(), makeFakeOffer()];
 const comments = [makeFakeReview(), makeFakeReview()];
 
+const state = {
+  offers: [],
+  offer: defaultOffer,
+  offersFavorite: [],
+  offersNearby: [],
+  comments: [],
+  isDataLoaded: false,
+  isOfferLoaded: false,
+  isLoadedOffersNearby: false,
+  isLoadedComments: false,
+};
+
 describe('Reducer: offersData', () => {
+
   it('without additional parameters should return initial state', () => {
     expect(offersData.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
-      .toEqual({
-        offers: [],
-        offer: defaultOffer,
-        offersFavorite: [],
-        offersNearby: [],
-        comments: [],
-        isDataLoaded: false,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: false,
-        isLoadedComments: false,
-      });
+      .toEqual(state);
   });
+
   it('should load offers', () => {
-    const state = {
-      offers: [],
-      offer: defaultOffer,
-      offersFavorite: [],
-      offersNearby: [],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
     expect(offersData.reducer(state, loadOffers(offers)))
-      .toEqual({
-        offers,
-        offer: defaultOffer,
-        offersFavorite: [],
-        offersNearby: [],
-        comments: [],
-        isDataLoaded: true,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: false,
-        isLoadedComments: false,
-      });
+      .toEqual({...state, offers, isDataLoaded: true});
   });
+
   it('should load offer', () => {
-    const state = {
-      offers: [],
-      offer: defaultOffer,
-      offersFavorite: [],
-      offersNearby: [],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
     expect(offersData.reducer(state, loadOffer(offer)))
-      .toEqual({
-        offers: [],
-        offer: offer,
-        offersFavorite: [],
-        offersNearby: [],
-        comments: [],
-        isDataLoaded: false,
-        isOfferLoaded: true,
-        isLoadedOffersNearby: false,
-        isLoadedComments: false,
-      });
+      .toEqual({...state, offer: offer, isOfferLoaded: true});
   });
+
   it('should load offersFavorite', () => {
-    const state = {
-      offers: [],
-      offer: defaultOffer,
-      offersFavorite: [],
-      offersNearby: [],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
     expect(offersData.reducer(state, loadOffersFavorite(offers)))
-      .toEqual({
-        offers: [],
-        offer: defaultOffer,
-        offersFavorite: offers,
-        offersNearby: [],
-        comments: [],
-        isDataLoaded: false,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: false,
-        isLoadedComments: false,
-      });
+      .toEqual({...state, offersFavorite: offers});
   });
+
   it('should load offersNearby', () => {
-    const state = {
-      offers: [],
-      offer: defaultOffer,
-      offersFavorite: [],
-      offersNearby: [],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
     expect(offersData.reducer(state, loadOffersNearby(offers)))
-      .toEqual({
-        offers: [],
-        offer: defaultOffer,
-        offersFavorite: [],
-        offersNearby: offers,
-        comments: [],
-        isDataLoaded: false,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: true,
-        isLoadedComments: false,
-      });
+      .toEqual({...state, offersNearby: offers, isLoadedOffersNearby: true});
   });
+
   it('should load comments', () => {
-    const state = {
-      offers: [],
-      offer: defaultOffer,
-      offersFavorite: [],
-      offersNearby: [],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
     expect(offersData.reducer(state,  loadComments(comments)))
-      .toEqual({
-        offers: [],
-        offer: defaultOffer,
-        offersFavorite: [],
-        offersNearby: [],
-        comments: comments,
-        isDataLoaded: false,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: false,
-        isLoadedComments: true,
-      });
+      .toEqual({...state, comments: comments, isLoadedComments: true});
   });
+
   it('should reset comments', () => {
-    const state = {
-      offers: [],
-      offer: defaultOffer,
-      offersFavorite: [],
-      offersNearby: [],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
-    expect(offersData.reducer(state, resetComments()))
-      .toEqual({
-        offers: [],
-        offer: defaultOffer,
-        offersFavorite: [],
-        offersNearby: [],
-        comments: [],
-        isDataLoaded: false,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: false,
-        isLoadedComments: false,
-      });
+    expect(offersData.reducer({...state, comments: comments, isLoadedComments: true}, resetComments()))
+      .toEqual({...state, comments: [], isLoadedComments: true});
   });
 
   it('should update favorites', () => {
     const offerFirst = makeFakeOffer();
     const offerSecond = makeFakeOffer();
 
-    const state = {
+    expect(offersData.reducer({
+      ...state,
       offers: [offerFirst, offerSecond],
       offer: offerFirst,
       offersFavorite: [offerFirst, offerSecond],
       offersNearby: [offerFirst, offerSecond],
-      comments: [],
-      isDataLoaded: false,
-      isOfferLoaded: false,
-      isLoadedOffersNearby: false,
-      isLoadedComments: false,
-    };
-    expect(offersData.reducer(state, updateFavorites(offerFirst)))
+    }, updateFavorites(offerFirst)))
       .toEqual({
+        ...state,
         offers: [offerFirst, offerSecond],
         offer: offerFirst,
         offersFavorite: [offerFirst, offerSecond],
         offersNearby: [offerFirst, offerSecond],
-        comments: [],
-        isDataLoaded: false,
-        isOfferLoaded: false,
-        isLoadedOffersNearby: false,
-        isLoadedComments: false,
       });
   });
 });

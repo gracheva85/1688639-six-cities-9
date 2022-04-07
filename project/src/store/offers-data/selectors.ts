@@ -2,7 +2,6 @@ import {NameSpace} from '../../consts';
 import {Offer} from '../../types/offer';
 import {Review} from '../../types/review';
 import {State} from '../../types/state';
-import { createSelector } from 'reselect';
 
 const getOffers = (state: State): Offer[] => state[NameSpace.Data].offers;
 const getOffer = (state: State): Offer => state[NameSpace.Data].offer;
@@ -14,9 +13,6 @@ const getOfferLoaded = (state: State): boolean => state[NameSpace.Data].isOfferL
 const getLoadedOffersNearby = (state: State): boolean => state[NameSpace.Data].isLoadedOffersNearby;
 const getLoadedComments = (state: State): boolean => state[NameSpace.Data].isLoadedComments;
 
-const filtredOfferSelector = createSelector(
-  getFavorite,  (offersFavorite) => offersFavorite.filter(({isFavorite}) => isFavorite));
-
 export {
   getOffers,
   getOffer,
@@ -26,6 +22,5 @@ export {
   getDataLoaded,
   getOfferLoaded,
   getLoadedOffersNearby,
-  getLoadedComments,
-  filtredOfferSelector
+  getLoadedComments
 };

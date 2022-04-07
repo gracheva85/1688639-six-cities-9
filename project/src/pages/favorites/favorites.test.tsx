@@ -9,11 +9,11 @@ import Favorites from './favorites';
 
 const mockStore = configureMockStore();
 const mockUser = makeFakeUser();
-const mockOffers = [makeFakeOffer(), makeFakeOffer()];
 const history = createMemoryHistory();
 
 describe('Component: Favorites', () => {
   it('should render correctly if user added offers to favorites', () => {
+    const mockOffers = [{...makeFakeOffer(), isFavorite: true}, makeFakeOffer()];
 
     render(
       <Provider store={mockStore({User: {authorizationStatus:  AuthorizationStatus.Auth, user: mockUser}, Data: {offersFavorite: mockOffers}})}>
