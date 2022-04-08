@@ -10,7 +10,7 @@ import browserHistory from './services/browser-history';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <HistoryRouter basename="/1688639-six-cities-9" history={browserHistory}>
+      <HistoryRouter history={browserHistory}>
         <App />
       </HistoryRouter>
     </Provider>
