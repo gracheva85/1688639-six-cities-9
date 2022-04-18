@@ -27,8 +27,8 @@ _`.editorconfig`, `.gitattributes`, `.gitignore`._
 
 ### На изучение материалов и написание проекта ушло 2 месяца.
 
-
 ---
+Учебный проект с версткой и стилями был предоставлен HTML Academy.
 
 <a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
 
